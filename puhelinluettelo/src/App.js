@@ -5,8 +5,9 @@ import Contacts from "./components/Contacts"
 import personService from "./services/persons"
 
 
+
 const App = () => {
-  const [ persons, setPersons] = useState([]) 
+  const [persons, setPersons] = useState([]) 
   const [person, setPerson] = useState({name:"", number:""})
   const [searchWord, setWord] = useState("")
 
@@ -55,7 +56,7 @@ const App = () => {
       
       <h2>Numbers</h2>
 
-      <Contacts persons ={persons} searchWord={searchWord}/>
+      <Contacts persons ={persons} searchWord={searchWord} setPersons ={setPersons}/>
       
       
     </div>
