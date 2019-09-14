@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from "./components/Filter"
 import AddForm from "./components/AddForm"
 import Contacts from "./components/Contacts"
-import axios from "axios"
+import personService from "./services/persons"
 
 
 const App = () => {
@@ -11,17 +11,21 @@ const App = () => {
   const [searchWord, setWord] = useState("")
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then(response => 
-        setPersons(response.data))
+    
+    personService
+        .getAll()
+        .then(personsData => setPersons(personsData))
+
   },[])
 
   function addContact(e){
     e.preventDefault()
     
     if(!persons.some(x => x.name === person.name)){
-      setPersons(persons.concat(person))
+      personService
+        .create(person)
+        .then(addedPerson => setPersons(persons.concat(addedPerson)))
+      
     } else {
       alert(`${person.name} is already added to phonebook`)
     }
