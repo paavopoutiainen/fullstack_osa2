@@ -6,18 +6,19 @@ import Results from "./components/Results"
 
 function App() {
 
+
+const [country, setCountry] = useState(null)//state for a country we want to display
 const [searchWord, setWord] = useState("")
 const [countriesData, setCountriesData] = useState([])
+const [matchedCountries, setMatchedCountries] = useState([])//state for countries that match with the searchword
 
-
+//listening to the searchfield and changing the state
 function searchWordChanged(e) {
   setWord(e.target.value)
-  //console.log("matched",matchedCountries)
- 
 }
-console.log("kkakki")
 
 
+//fetching the country data on the first rendering
 useEffect(() => {
   axios
     .get("https://restcountries.eu/rest/v2/all")
@@ -25,17 +26,13 @@ useEffect(() => {
   
 }, [])
 
-/*const matchedCountries = countriesData.map(country => {
-  if(country.name.toLowerCase().includes(searchWord.toLowerCase())){
-    console.log("maa: ", country.name)
-    console.log("hakusana", searchWord)
-    return <p>{country.name}</p>
-  } 
-})*/
-const setSearchWordOnClick = (word) => {
-  console.log("this is:", typeof word)
-  setWord(word)
-}
+//effect hook which sets the matchedCountries consistent with the new searchword everytime 
+//the searchword changes
+useEffect(() => {
+  setMatchedCountries(countriesData.filter((country, i) => 
+  country.name.toLowerCase().includes(searchWord.toLowerCase()) && searchWord !== ""))
+  
+}, [searchWord])
 
 
   return (
@@ -45,8 +42,8 @@ const setSearchWordOnClick = (word) => {
         value ={searchWord} onChange={searchWordChanged} />
       </div>
       
-      <Results word = {searchWord} countries = {countriesData} 
-      callback={setSearchWordOnClick}/>
+      <Results matchedCountries ={matchedCountries} setMatchedCountries ={setMatchedCountries} 
+      setCountry={setCountry} country ={country}/>
     </div>
   )
     
