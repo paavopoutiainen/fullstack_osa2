@@ -1,29 +1,3 @@
 {
-  "persons": [
-    {
-      "name": "Paavo Poutiainen",
-      "number": "uiuioo",
-      "id": 2
-    },
-    {
-      "name": "niko eklund",
-      "number": "0452280492",
-      "id": 3
-    },
-    {
-      "name": "aija ",
-      "number": "0504123316",
-      "id": 4
-    },
-    {
-      "name": "ilo",
-      "number": "29305232",
-      "id": 5
-    },
-    {
-      "name": "tyuoug",
-      "number": "utoui",
-      "id": 6
-    }
-  ]
+  "persons": []
 }

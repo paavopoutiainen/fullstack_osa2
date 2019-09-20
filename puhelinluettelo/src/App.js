@@ -12,6 +12,7 @@ const App = () => {
   const [person, setPerson] = useState({name:"", number:""})
   const [searchWord, setWord] = useState("")
   const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     
@@ -42,12 +43,26 @@ const App = () => {
       if(result){
         personService
           .update(person, personToBeChanged.id)
-          .then(response => setPersons(persons.filter(p => p.name !== response.name).concat(response)))
-
-          setMessage("Number changed")
-          setTimeout(() => {
+          .then(response => {
+            setPersons(persons.filter(p => p.name !== response.name).concat(response))
+            setMessage("Number changed")
+            setTimeout(() => {
             setMessage(null)
           }, 5000)
+          })
+          
+          .catch(error => {
+            
+            setErrorMessage(`Information of ${person.name} has already been removed from the server`)
+            setPersons(persons.filter(p => person.name !== p.name))
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          }
+            
+          )
+          
+          
       }
     }
     setPerson({name:"", number:""})
@@ -67,7 +82,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message}/>
+      <Notification message={message} errorMessage={errorMessage}/>
       <Filter searchWord = {searchWord} callback = {searchWordChanged}/>
      
       

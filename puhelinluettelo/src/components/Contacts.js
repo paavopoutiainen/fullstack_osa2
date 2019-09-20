@@ -10,7 +10,7 @@ const Contacts = ({persons, searchWord, setPersons, setMessage}) =>{
   const deletePerson = id => {
     console.log(`the person of id ${id} was clicked`)
     const person = persons.find(n => n.id === id)
-    const result = window.confirm(`Delete ${person.name}`);
+    const result = window.confirm(`Delete ${person.name}?`);
     if(result){
       console.log("got here")
       personService
@@ -18,6 +18,9 @@ const Contacts = ({persons, searchWord, setPersons, setMessage}) =>{
         .then(setPersons(persons.filter(n => n.id !== id)))
       
       setMessage(`${person.name} deleted`)
+      setTimeout(() =>{
+        setMessage(null)
+      }, 5000)
     }
   }  
 
